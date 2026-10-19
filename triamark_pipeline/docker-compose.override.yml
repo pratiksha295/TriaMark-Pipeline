@@ -1,0 +1,39 @@
+# Local development only.
+#
+# Metadata DB: our Postgres gets the unique alias "triamark-postgres" and every Airflow
+# service connects to that name instead of the default "postgres". On this machine the
+# default name resolved to another Astro project's database (ph-global-dataeng-dev), so a
+# unique name means we can only ever reach our own Postgres -- or fail to connect.
+#
+# Volumes:
+#  - .aws: Windows AWS CLI config + SSO token cache (TriMarkSandbox profile), READ-ONLY.
+#    Run `aws sso login --profile TriMarkSandbox` on Windows when the token expires.
+#  - triamark_spark: the existing PySpark pipeline, run by the DAG tasks.
+
+x-triamark-db: &triamark-db
+  AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql://postgres:postgres@triamark-postgres:5432
+  AIRFLOW__CORE__SQL_ALCHEMY_CONN: postgresql://postgres:postgres@triamark-postgres:5432
+
+x-triamark-volumes: &triamark-volumes
+  - C:/Users/PratikshaRathod/.aws:/usr/local/airflow/.aws:ro
+  - G:/TriMark_DBT/triamark_dbt/TriMark_STEP_Spark:/usr/local/airflow/triamark_spark
+
+services:
+  postgres:
+    networks:
+      airflow:
+        aliases:
+          - triamark-postgres
+  db-migration:
+    environment: *triamark-db
+  api-server:
+    environment: *triamark-db
+  scheduler:
+    environment: *triamark-db
+    volumes: *triamark-volumes
+  dag-processor:
+    environment: *triamark-db
+    volumes: *triamark-volumes
+  triggerer:
+    environment: *triamark-db
+    volumes: *triamark-volumes

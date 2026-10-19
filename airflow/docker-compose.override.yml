@@ -1,0 +1,10 @@
+services:
+  scheduler:
+    volumes:
+      - C:/Users/PratikshaRathod/.aws:/home/astro/.aws:ro
+  dag-processor:
+    volumes:
+      - C:/Users/PratikshaRathod/.aws:/home/astro/.aws:ro
+  triggerer:
+    volumes:
+      - C:/Users/PratikshaRathod/.aws:/home/astro/.aws:ro

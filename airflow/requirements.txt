@@ -1,0 +1,4 @@
+# Astro Runtime includes the following pre-installed providers packages: https://www.astronomer.io/docs/astro/runtime-image-architecture#provider-packages
+
+# Needed for RedshiftDataOperator (not pre-installed in Runtime 3.3)
+apache-airflow-providers-amazon

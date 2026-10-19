@@ -1,0 +1,5 @@
+postgres:
+    repository: docker.io/postgres
+    tag: "16"
+project:
+    name: triamark_pipeline

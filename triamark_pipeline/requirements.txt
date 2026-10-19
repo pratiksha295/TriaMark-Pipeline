@@ -1,0 +1,6 @@
+# apache-airflow-providers-amazon ships with Astro Runtime.
+# Same versions as TriMark_STEP_Spark/requirements.txt, plus openpyxl (used by the stages for .xlsx mappings).
+pyspark==3.5.9
+pandas
+pyarrow
+openpyxl
